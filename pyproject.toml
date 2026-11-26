@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=77"]  # PEP 639 license fields
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orca-agent-workflow"
+dynamic = ["version"]
+description = "Guardrails for running AI coding agents on code that matters: scoped workers, independent review and isolated checks, coordinated through Orca."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = []
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Quality Assurance",
+]
+
+[project.urls]
+Homepage = "https://github.com/diarsabri/orca-agent-workflow"
+
+[project.scripts]
+orca-agent-workflow = "orca_agent_workflow.cli:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "orca_agent_workflow.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+orca_agent_workflow = ["*.json", "*.Dockerfile", "template/**/*"]

@@ -1,0 +1,19 @@
+{
+  "comment": "Gate, build and deploy inputs. Workers may write these only when the approved spec lists them under Sensitive files and the manifest marks them sensitive; the reviewer must examine each one. Patterns without a slash match the file name; patterns with a slash match the whole path. A missing name means 'not highlighted', not 'uncontrolled'.",
+  "patterns": [
+    "makefile", "gnumakefile",
+    "pyproject.toml", "uv.lock", "uv.toml", ".python-version", ".python-versions",
+    "setup.cfg", "tox.ini", "noxfile.py", ".pre-commit-config.yaml",
+    ".flake8", "pytest.ini", ".pytest.ini", "pytest.toml", ".pytest.toml",
+    "mypy.ini", ".mypy.ini", "ruff.toml", ".ruff.toml", ".isort.cfg", ".editorconfig", ".coveragerc",
+    "conftest.py", "sitecustomize.py", "usercustomize.py",
+    ".gitignore", ".gitattributes", ".gitconfig",
+    "dockerfile*", "containerfile*", "*.dockerfile", "*.containerfile",
+    "docker-compose*.yml", "docker-compose*.yaml", "compose*.yml", "compose*.yaml", ".dockerignore",
+    "fly*.toml", "fly*/*.toml", "deploy/*", "vercel.json", "*.sha256",
+    "package.json", "package-lock.json", "next.config.*", "eslint.config.*",
+    "playwright*.config.*", "tsconfig.json", "postcss.config.*",
+    "*.vscode/*", "*.devcontainer/*", "*.idea/*",
+    "scripts/ci_*gate*.py", "tests/*/test_ci_*gate*.py"
+  ]
+}

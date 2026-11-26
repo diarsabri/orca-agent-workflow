@@ -1,0 +1,4 @@
+# Store and check out text with LF everywhere, including Windows with core.autocrlf.
+* text=auto eol=lf
+*.sh text eol=lf
+*.py text eol=lf

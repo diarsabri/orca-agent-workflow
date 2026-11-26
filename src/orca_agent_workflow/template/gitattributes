@@ -1,0 +1,5 @@
+# Orca agent workflow: keep its files LF on every platform, including Windows checkouts
+.agents/** text eol=lf
+.claude/** text eol=lf
+.opencode/** text eol=lf
+.githooks/** text eol=lf

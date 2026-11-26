@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "repository": "example/project",
+  "head_sha": "FULL_REVIEWED_HEAD_SHA",
+  "base_sha": "FULL_REVIEWED_BASE_SHA",
+  "policy_sha256": "SHA256_OF_BASE_AGENTS_WORKFLOW_JSON",
+  "planner": {"agent": "claude", "model": "claude-opus-5-5"},
+  "_cross_provider_fallback": "Only for a same-provider review while the policy enables another provider's reviewer: set cross_provider_fallback to {\"reason\": quota_exhausted | launch_failed | unqualified | model_unavailable}. Use planner {\"agent\": \"human\"} for a human-planned change.",
+  "implementer_session_id": null,
+  "reviewer": {
+    "agent": "claude",
+    "requested_model": "claude-opus-5-5",
+    "effective_model": null,
+    "session_id": null,
+    "dispatch_id": null,
+    "fresh_session": true,
+    "_codex_only": "For agent codex also set model_evidence: codex-session-turn-context and qualification_sha256; session_id and dispatch_id are the Codex thread ID."
+  },
+  "coverage": {
+    "complete_diff": false,
+    "acceptance_criteria": false,
+    "test_evidence": false
+  },
+  "verdict": "blocked",
+  "findings": [],
+  "sensitive_files_reviewed": [],
+  "summary": "Review not completed. Replace only with corroborated evidence.",
+  "launch_receipt_sha256": null,
+  "review_report_sha256": null,
+  "implementation_authorship": "unknown"
+}

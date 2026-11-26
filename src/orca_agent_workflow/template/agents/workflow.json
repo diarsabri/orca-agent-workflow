@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "runtime": {
+    "package": "orca-agent-workflow",
+    "version": "@@VERSION@@"
+  },
+  "project": {
+    "name": "@@NAME@@",
+    "repository": "@@REPOSITORY@@",
+    "stack": "other",
+    "checks": []
+  },
+  "max_fix_rounds": 2,
+  "reviewer_provider_differs_from_planner": "preferred",
+  "roles": {
+    "planner": [
+      {
+        "agent": "claude",
+        "model": "claude-opus-5-5",
+        "enabled": true
+      },
+      {
+        "agent": "codex",
+        "model": "gpt-6.2-sol",
+        "enabled": true
+      }
+    ],
+    "implementer": [
+      {
+        "agent": "claude",
+        "model": "claude-sonnet-5-5",
+        "enabled": true
+      },
+      {
+        "agent": "codex",
+        "model": null,
+        "enabled": false,
+        "blocked_reason": "native_capability_scope_unverified"
+      }
+    ],
+    "reviewer": [
+      {
+        "agent": "claude",
+        "model": "claude-opus-5-5",
+        "enabled": true
+      },
+      {
+        "agent": "codex",
+        "model": "gpt-6.1-sol",
+        "enabled": false,
+        "requires": "passing `python3 .agents/workflow.py codex-review qualify` for the installed Codex binary",
+        "blocked_reason": "qualify the installed binary/profile/adapter on this machine before enabling"
+      }
+    ]
+  },
+  "gates": {
+    "dockerfile": null,
+    "inputs": [],
+    "timeout_seconds": 900,
+    "memory": "2g",
+    "note": "null uses the runtime's standard-library Python image. Name a reviewed Dockerfile and its build inputs to add the application's runtime and dependencies."
+  },
+  "sensitive_patterns": []
+}
