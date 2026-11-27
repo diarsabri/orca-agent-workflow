@@ -138,6 +138,8 @@ runtime/build paths to the project's sensitive-file policy when needed. See
 Run the contract check (`python3 .agents/workflow.py check`), prerequisite discovery
 (`python3 .agents/workflow.py doctor`) and meaningful application checks in the reviewed gate
 environment when available. The kit's own tests and link checks are not installed.
+For Apple simulator tests, give `native-check --destination` the platform and device UUID,
+for example `platform=iOS Simulator,id=<UUID>` from `xcrun simctl list devices available`.
 Review the complete diff, including any previously existing custom instructions.
 Keep the version pin in `.agents/workflow.json`. Do not inherit the kit's
 release validation claims or claim model access from executable presence.

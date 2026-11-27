@@ -119,6 +119,11 @@ class NativeCheckTests(unittest.TestCase):
                         self.assertEqual(report["skippedTests"], 1)
                         self.assertEqual(report["devices"], [{"modelName": "Fixture iPhone"}])
                     command = run.call_args.args[0]
-                    self.assertEqual(command[0], "/usr/bin/xcodebuild")
-                    self.assertIn(DESTINATION, command)
+                    self.assertEqual(command, [
+                        "/usr/bin/xcodebuild", "-project", str(self.project), "-scheme", "App",
+                        "-destination", DESTINATION, "-derivedDataPath", str(output / "DerivedData"),
+                        "-resultBundlePath", str(output / "Tests.xcresult"),
+                        "-disableAutomaticPackageResolution", "-parallel-testing-enabled", "NO",
+                        "CODE_SIGN_IDENTITY=-", "test",
+                    ])
                     self.assertEqual(report["revision"], "fixture-revision")

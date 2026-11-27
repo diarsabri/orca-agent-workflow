@@ -155,8 +155,9 @@ XCFramework. Preview does not run Xcode or install dependencies.
 
 Use a clean commit in a disposable or dedicated macOS checkout. Review the
 application code, build phases, and dependency setup before running on the
-host. Copy the simulator ID from `xcrun simctl list devices booted` or choose
-one from the available devices:
+host. Select an available simulator UUID from `xcrun simctl list devices available`.
+The destination must use `platform=<platform> Simulator,id=<UUID>`. The host
+check uses ad hoc signing so the simulator app keeps its entitlements.
 
 ```sh
 python3 .agents/workflow.py native-check --container App.xcodeproj --scheme App \

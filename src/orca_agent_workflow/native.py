@@ -84,7 +84,7 @@ def run(root: Path, args: argparse.Namespace, report: dict) -> None:
         "/usr/bin/xcodebuild", container_flag, str(container), "-scheme", args.scheme,
         "-destination", args.destination, "-derivedDataPath", str(output / "DerivedData"),
         "-resultBundlePath", str(result_bundle), "-disableAutomaticPackageResolution",
-        "-parallel-testing-enabled", "NO", "CODE_SIGNING_ALLOWED=NO", "test",
+        "-parallel-testing-enabled", "NO", "CODE_SIGN_IDENTITY=-", "test",
     ]
     with log.open("w", encoding="utf-8") as stream:
         result = subprocess.run(command, cwd=root, stdout=stream, stderr=subprocess.STDOUT, timeout=args.timeout)
