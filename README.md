@@ -39,7 +39,7 @@ Your assistant can help install Orca during setup. For the full workflow, you’
 From your project folder, preview the setup with:
 
 ```sh
-uvx orca-agent-workflow@0.2.0 init
+uvx orca-agent-workflow@0.2.1 init
 ```
 
 Review the proposed files before adding `--apply`. The [setup reference](docs/setup-reference.md#manual-setup-or-automation) covers manual installation and project checks.

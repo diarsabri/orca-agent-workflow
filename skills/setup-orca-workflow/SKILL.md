@@ -98,13 +98,13 @@ and the project's stack, checks and coordinator. Vendoring ensures the installed
 project uses the same candidate. After publication, preview the pinned package:
 
 ```sh
-uvx orca-agent-workflow@0.2.0 init --target /absolute/project --stack other --check './scripts/test.sh' --coordinator codex
+uvx orca-agent-workflow@0.2.1 init --target /absolute/project --stack other --check './scripts/test.sh' --coordinator codex
 ```
 
 Inspect the proposed actions. Repeat the same command with `--apply` to install.
 Select `--opencode` and `--pre-push-hook` only when requested. Use `--vendor` when
 the team wants to review and commit the runtime. The Git-tag fallback is
-`uvx --from git+https://github.com/diarsabri/orca-agent-workflow@v0.2.0 orca-agent-workflow init` with the same arguments.
+`uvx --from git+https://github.com/diarsabri/orca-agent-workflow@v0.2.1 orca-agent-workflow init` with the same arguments.
 Read the resulting `requires_merge` list and the candidates under
 `.tmp/orca-agent-workflow/merge/` in the target project.
 
@@ -165,10 +165,10 @@ After adoption is committed, reuse an open project coordinator and have it read
 the merged `AGENTS.md` and `start-task` skill. If setup is handing the user into
 Orca for the first time, check `python3 .agents/workflow.py start --help` for
 `--wait-for-task`. With a runtime that supports it, run that option once
-from the clean checkout containing the adoption commit. With published 0.2.0,
-launch from the main checkout once it contains that commit. The fixed launcher
-also supports linked workspaces and uses their current commit as the base.
-Report the workspace and session shown in the receipt, the checks that passed and any remaining prerequisites. The coordinator asks for
+from the clean checkout containing the adoption commit. A linked worktree works too.
+The launcher uses its current commit as the base.
+Report the workspace and session shown in the receipt, the checks that passed,
+and any remaining prerequisites. The coordinator asks for
 the first task there. If the launch receipt is uncertain, inspect Orca before
 retrying. Use `orca worktree list --repo path:/absolute/main-checkout --json` and
 `orca terminal list --worktree path:/absolute/checkout --json` to locate the

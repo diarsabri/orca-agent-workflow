@@ -28,7 +28,7 @@ when missing. Orca is needed to run the workflow, not to begin its installation.
    and real account preferences; do not silently claim an unavailable template
    provider is ready or enable unsupported worker profiles.
 5. Follow the skill completely. Bootstrap Orca and preview the published install with
-   `uvx orca-agent-workflow@0.2.0 init`. Repeat with `--apply`, merge custom
+   `uvx orca-agent-workflow@0.2.1 init`. Repeat with `--apply`, merge custom
    instructions, configure project checks/runtime, and validate the result. The
    helper's bootstrap plans by default; `bootstrap --apply` performs its supported
    Orca installation/startup steps when this is within the user's request.
@@ -43,9 +43,8 @@ when missing. Orca is needed to run the workflow, not to begin its installation.
    open and have it read the merged instructions. Otherwise, for a ready-to-use Orca
    handoff check that the installed `start --help` lists `--wait-for-task`
    and run `python3 .agents/workflow.py start --wait-for-task` once from the clean
-   checkout containing the adoption commit. For 0.2.0, use the main checkout
-   after it includes that commit. Give the user the workspace and session from the
-   launch receipt. If the installed runtime predates this option, use `start "Your task"` when the
+   checkout containing the adoption commit. Give the user the workspace and session from
+   the launch receipt. If the installed runtime predates this option, use `start "Your task"` when the
    user supplies their task. If setup ends before the commit or launch, report
    the step still needed.
 
