@@ -16,7 +16,7 @@ Your assistant checks what is installed, prepares the project instructions, and 
 
 For the full workflow, Claude Code or Codex can coordinate. Claude Code is required to edit the files, and the standard project checks run in Docker. If setup stops, use the [setup reference](setup-reference.md) or check [which tools are supported](compatibility.md).
 
-If you prefer a terminal, `uvx orca-agent-workflow@0.2.0 init` previews the setup files. Follow the [manual setup steps](setup-reference.md#manual-setup-or-automation) to finish.
+If you prefer a terminal, `uvx orca-agent-workflow@0.2.1 init` previews the setup files. Follow the [manual setup steps](setup-reference.md#manual-setup-or-automation) to finish.
 
 ## 2. Describe the change
 

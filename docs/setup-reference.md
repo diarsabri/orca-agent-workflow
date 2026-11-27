@@ -107,13 +107,14 @@ to receive it; updating the setup skill alone does not change their instructions
 
 For an explicit new Orca workspace, run from the clean checkout whose commit
 you want to build on. The launcher looks up the repository by its
-main checkout and uses the calling checkout’s commit as the base. With the
-published 0.2.0 launcher, run from the main checkout after it contains your
-adoption commit:
+main checkout and uses the calling checkout’s commit as the base.
 
 ```sh
 python3 .agents/workflow.py start "Describe what you want to build or change"
 ```
+
+If you still use 0.2.0, launch from the main checkout after it contains your
+adoption commit.
 
 Or run `python3 .agents/workflow.py start` and answer the task question. The helper checks local
 launch prerequisites, registers a missing Orca project, and opens a fresh independent
@@ -180,11 +181,11 @@ From the parent directory of your project, preview the files the published versi
 will add, review the output, then apply the same setup:
 
 ```sh
-uvx orca-agent-workflow@0.2.0 init --target ../my-project --coordinator codex
-uvx orca-agent-workflow@0.2.0 init --target ../my-project --coordinator codex --apply
+uvx orca-agent-workflow@0.2.1 init --target ../my-project --coordinator codex
+uvx orca-agent-workflow@0.2.1 init --target ../my-project --coordinator codex --apply
 ```
 
-The Git-tag fallback is `uvx --from git+https://github.com/diarsabri/orca-agent-workflow@v0.2.0 orca-agent-workflow init`.
+The Git-tag fallback is `uvx --from git+https://github.com/diarsabri/orca-agent-workflow@v0.2.1 orca-agent-workflow init`.
 Add `--vendor --apply` to keep the runtime in the application.
 
 It detects Python/Node projects and suggests checks without executing them; edit
