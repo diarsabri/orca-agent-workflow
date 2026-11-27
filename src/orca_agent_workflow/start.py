@@ -63,12 +63,13 @@ def configuration(root: Path) -> tuple[dict, dict]:
     return project, {"agent": coordinator["agent"], "model": coordinator["model"]}
 
 
-def readiness(root: Path, coordinator: dict) -> tuple[str | None, list[str]]:
+def readiness(root: Path, coordinator: dict) -> tuple[str | None, Path, list[str]]:
     problems = []
     for tool in ("git", "orca", coordinator["agent"]):
         if not shutil.which(tool):
             problems.append(f"Install {tool} and make it available on PATH.")
     head = None
+    repo_path = root
     if shutil.which("git"):
         top = git(root, "rev-parse", "--show-toplevel")
         if top.returncode or Path(top.stdout.strip()).resolve() != root:
@@ -76,6 +77,13 @@ def readiness(root: Path, coordinator: dict) -> tuple[str | None, list[str]]:
                 "Initialize Git in the project folder and review/commit its files first."
             )
         else:
+            # Git lists the primary checkout first, even when called from a linked worktree.
+            listing = git(root, "worktree", "list", "--porcelain", "-z")
+            first_field = listing.stdout.partition("\0")[0]
+            if listing.returncode or not first_field.startswith("worktree "):
+                problems.append("Git could not identify the primary checkout for Orca registration.")
+            else:
+                repo_path = Path(first_field.removeprefix("worktree "))
             result = git(root, "rev-parse", "--verify", "HEAD")
             head = result.stdout.strip() if result.returncode == 0 else None
             tracked = git(
@@ -89,13 +97,13 @@ def readiness(root: Path, coordinator: dict) -> tuple[str | None, list[str]]:
                 problems.append(
                     "This launcher needs a clean committed checkout. Preserve unrelated changes and use an isolated clean checkout; no files were changed."
                 )
-    return head, problems
+    return head, repo_path, problems
 
 
 def status() -> int:
     root = task_scope.project_folder()
     project, coordinator = configuration(root)
-    _, problems = readiness(root, coordinator)
+    _, _, problems = readiness(root, coordinator)
     print(
         f"Project: {project['name']}\nCoordinator: {coordinator['agent']} / {coordinator['model']}"
     )
@@ -137,7 +145,7 @@ def start(args: argparse.Namespace) -> int:
         task = ask("What would you like to build or change?")
     if not args.wait_for_task and not task.strip():
         raise ValueError("Describe a non-empty task.")
-    head, problems = readiness(root, coordinator)
+    head, repo_path, problems = readiness(root, coordinator)
     if args.wait_for_task:
         workspace = "first-task"
         prompt = (
@@ -164,7 +172,7 @@ def start(args: argparse.Namespace) -> int:
         "worktree",
         "create",
         "--repo",
-        f"path:{root}",
+        f"path:{repo_path}",
         "--name",
         workspace,
         "--base-branch",
@@ -199,7 +207,7 @@ def start(args: argparse.Namespace) -> int:
         raise ValueError("\n".join(problems))
     # Register only on the documented not-found response; never treat transport failure as absence.
     result = subprocess.run(
-        resolved(["orca", "repo", "show", "--repo", f"path:{root}", "--json"]),
+        resolved(["orca", "repo", "show", "--repo", f"path:{repo_path}", "--json"]),
         capture_output=True,
         text=True,
         timeout=30,
@@ -211,7 +219,7 @@ def start(args: argparse.Namespace) -> int:
                 "Orca could not inspect this project. " + result.stdout + result.stderr
             )
         result = subprocess.run(
-            resolved(["orca", "repo", "add", "--path", str(root), "--json"]),
+            resolved(["orca", "repo", "add", "--path", str(repo_path), "--json"]),
             capture_output=True,
             text=True,
             timeout=30,

@@ -43,8 +43,9 @@ when missing. Orca is needed to run the workflow, not to begin its installation.
    open and have it read the merged instructions. Otherwise, for a ready-to-use Orca
    handoff check that the installed `start --help` lists `--wait-for-task`
    and run `python3 .agents/workflow.py start --wait-for-task` once from the clean
-   checkout. Give the user the workspace and session from the launch receipt. If
-   the installed runtime predates this option, use `start "Your task"` when the
+   checkout containing the adoption commit. For 0.2.0, use the main checkout
+   after it includes that commit. Give the user the workspace and session from the
+   launch receipt. If the installed runtime predates this option, use `start "Your task"` when the
    user supplies their task. If setup ends before the commit or launch, report
    the step still needed.
 
