@@ -1,15 +1,23 @@
 # Orca Agent Workflow
 
-Orca Agent Workflow helps you change software with a team of AI coding assistants. One plans the work with you, another writes the code, and a fresh reviewer checks it. You approve the plan and decide what goes into your project.
+Orca Agent Workflow helps you take a feature idea or bug report from “here’s what I want” to a tested change you can review. You work with one coding assistant throughout. It helps you define what success looks like, gives another agent a specific job, and brings the result back to you.
+
+This is useful when a change touches more than one part of a project or when a small misunderstanding could produce the wrong feature. You can catch a misunderstanding while the plan is still a few sentences long. Later, a reviewer who didn’t write the code checks whether the result does what you agreed.
 
 ## How a task works
 
 Suppose you ask, **“Show a weekly total in my habit tracker.”**
 
-1. **Agree on the plan.** Your assistant acts as the coordinator. It might ask when your week starts and whether to count each habit once or every time you complete it. You approve what the total should mean and which files the agent may change.
-2. **Make the change.** Orca gives the task its own workspace. A separate coding agent edits the approved files there.
-3. **Check the result.** The coordinator runs the project’s checks. A fresh reviewer examines the whole change. For example, does a habit completed on Sunday night count toward the correct week?
-4. **Decide whether to use it.** You see the proposed changes, which checks passed, and any open concerns. You decide whether to add the weekly total to your app.
+1. **Agree on what ‘weekly total’ means.** Your assistant might ask, “If I complete the same habit on three days, should that count as one or three?” You settle on three completions, a Monday start, and zero for an empty week. The assistant writes down those decisions, the files that may change, and how it will test the result. You approve that plan.
+2. **Build it in a separate workspace.** Orca gives the task its own working copy of your project. The coding agent can edit only the files approved for this job. If it discovers it also needs to change how habits are stored, it has to ask before expanding the work.
+3. **Test it and get a second reading.** Your assistant runs the project’s checks. A fresh reviewer reads the plan and the actual code changes. For example, the tests might pass for an ordinary week, but the reviewer might notice there’s no check for a completion just after midnight on Monday. The coordinator can send it back for a fix and have the revised change checked again.
+4. **Decide whether it’s ready.** You get the proposed change, the checks that ran, the reviewer’s findings, and any unresolved questions. On GitHub the change can come to you as a *pull request*, where you can inspect it, request an adjustment, or accept it into the main project.
+
+## What Orca does and what the kit adds
+
+[Orca](https://github.com/stablyai/orca) is the desktop app that manages workspaces and agent sessions. This kit adds the project instructions and tools that connect those sessions. They carry the written plan from one agent to the next, limit which files the coding agent can edit, and record which version was tested and reviewed. If the code changes after review, that earlier review no longer covers it.
+
+You can still ask a quick question or request a small edit in your usual session. The full sequence is for work that benefits from a plan and an independent check.
 
 ## Try it in your project
 
@@ -21,7 +29,7 @@ Follow INSTALL.md, install Orca if needed, preserve my existing work,
 and show me what you verified.
 ```
 
-Orca is the desktop app that manages the agents’ workspaces. You can start setup before installing it. For the full workflow, you’ll need a Claude Code account for the agent that edits files. Claude Code or Codex can coordinate the task.
+Your assistant can help install Orca during setup. For the full workflow, you’ll need a Claude Code account for the agent that edits files. Claude Code or Codex can coordinate the task.
 
 [Walk through your first task](docs/getting-started.md) · [Browse the documentation](docs/README.md)
 
