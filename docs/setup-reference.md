@@ -105,7 +105,11 @@ updated `AGENTS.md` and `start-task` skill once. This routing is agent instructi
 not a mandatory execution hook. Existing applications need a deliberate upgrade
 to receive it; updating the setup skill alone does not change their instructions.
 
-For an explicit new Orca workspace, run from a clean, committed checkout:
+For an explicit new Orca workspace, run from the clean checkout whose commit
+you want to build on. The launcher looks up the repository by its
+main checkout and uses the calling checkout’s commit as the base. With the
+published 0.2.0 launcher, run from the main checkout after it contains your
+adoption commit:
 
 ```sh
 python3 .agents/workflow.py start "Describe what you want to build or change"
@@ -134,7 +138,7 @@ session from Orca. Substitute the adopter's repository path and the exact checko
 path returned by the first command:
 
 ```sh
-orca worktree list --repo path:/absolute/project --json
+orca worktree list --repo path:/absolute/main-checkout --json
 orca terminal list --worktree path:/absolute/checkout --json
 ```
 
@@ -155,8 +159,9 @@ XCFramework. Preview does not run Xcode or install dependencies.
 
 Use a clean commit in a disposable or dedicated macOS checkout. Review the
 application code, build phases, and dependency setup before running on the
-host. Copy the simulator ID from `xcrun simctl list devices booted` or choose
-one from the available devices:
+host. Select an available simulator UUID from `xcrun simctl list devices available`.
+The destination must use `platform=<platform> Simulator,id=<UUID>`. The host
+check uses ad hoc signing so the simulator app keeps its entitlements.
 
 ```sh
 python3 .agents/workflow.py native-check --container App.xcodeproj --scheme App \

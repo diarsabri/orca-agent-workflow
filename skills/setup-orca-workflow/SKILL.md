@@ -138,6 +138,8 @@ runtime/build paths to the project's sensitive-file policy when needed. See
 Run the contract check (`python3 .agents/workflow.py check`), prerequisite discovery
 (`python3 .agents/workflow.py doctor`) and meaningful application checks in the reviewed gate
 environment when available. The kit's own tests and link checks are not installed.
+For Apple simulator tests, give `native-check --destination` the platform and device UUID,
+for example `platform=iOS Simulator,id=<UUID>` from `xcrun simctl list devices available`.
 Review the complete diff, including any previously existing custom instructions.
 Keep the version pin in `.agents/workflow.json`. Do not inherit the kit's
 release validation claims or claim model access from executable presence.
@@ -163,10 +165,12 @@ After adoption is committed, reuse an open project coordinator and have it read
 the merged `AGENTS.md` and `start-task` skill. If setup is handing the user into
 Orca for the first time, check `python3 .agents/workflow.py start --help` for
 `--wait-for-task`. With a runtime that supports it, run that option once
-from the clean checkout. Report the workspace and session shown in the receipt,
-the checks that passed and any remaining prerequisites. The coordinator asks for
+from the clean checkout containing the adoption commit. With published 0.2.0,
+launch from the main checkout once it contains that commit. The fixed launcher
+also supports linked workspaces and uses their current commit as the base.
+Report the workspace and session shown in the receipt, the checks that passed and any remaining prerequisites. The coordinator asks for
 the first task there. If the launch receipt is uncertain, inspect Orca before
-retrying. Use `orca worktree list --repo path:/absolute/project --json` and
+retrying. Use `orca worktree list --repo path:/absolute/main-checkout --json` and
 `orca terminal list --worktree path:/absolute/checkout --json` to locate the
 existing coordinator. With an older runtime, use
 `start "Your task"` when the user has a task. For an installation-only request,

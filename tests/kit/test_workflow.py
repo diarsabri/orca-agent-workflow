@@ -370,6 +370,37 @@ else:
         self.assertIn("--no-parent", command)
         self.assertFalse((self.base / "should-not-exist").exists())
 
+    def test_linked_worktree_uses_main_repo_path_and_its_own_commit(self):
+        self.require_executable_fixtures()
+        self.assertEqual(self.setup_project().returncode, 0)
+        self.commit()
+        linked = self.base / "linked checkout"
+        subprocess.run(["git", "-C", str(self.target), "worktree", "add", "--detach", str(linked)],
+                       check=True, capture_output=True)
+        subprocess.run(["git", "-C", str(linked), "-c", "user.name=Example",
+                        "-c", "user.email=example@example.invalid", "-c", "core.hooksPath=/dev/null",
+                        "commit", "--allow-empty", "-qm", "linked worktree only"],
+                       check=True, capture_output=True)
+        head = subprocess.check_output(["git", "-C", str(linked), "rev-parse", "HEAD"], text=True).strip()
+        launcher = linked / ".agents/workflow.py"
+        preview = self.command(launcher, "start", "--wait-for-task", "--dry-run")
+        self.assertEqual(preview.returncode, 0, preview.stderr)
+        self.assertEqual(self.calls(), [])
+        plan = json.loads(preview.stdout)
+        self.assertTrue(plan["ready_for_planning"], plan["before_starting"])
+        command = plan["command"]
+        self.assertEqual(command[command.index("--repo") + 1], f"path:{self.target}")
+        self.assertEqual(command[command.index("--base-branch") + 1], head)
+
+        self.env["WORKFLOW_TEST_MODE"] = "unregistered"
+        launch = self.command(launcher, "start", "--wait-for-task")
+        self.assertEqual(launch.returncode, 0, launch.stderr)
+        self.assertEqual(self.calls(), [
+            ["repo", "show", "--repo", f"path:{self.target}", "--json"],
+            ["repo", "add", "--path", str(self.target), "--json"],
+            command[1:],
+        ])
+
     def test_start_registers_missing_project_once(self):
         self.require_executable_fixtures()
         self.assertEqual(self.setup_project().returncode, 0)
