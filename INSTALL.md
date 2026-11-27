@@ -27,8 +27,7 @@ when missing. Orca is needed to run the workflow, not to begin its installation.
    Claude/Codex and implementation requires Claude Code. Resolve missing clients
    and real account preferences; do not silently claim an unavailable template
    provider is ready or enable unsupported worker profiles.
-5. Follow the skill completely. Bootstrap Orca and preview the install from the
-   exact candidate wheel in private pilots. After publication, preview with
+5. Follow the skill completely. Bootstrap Orca and preview the published install with
    `uvx orca-agent-workflow@0.2.0 init`. Repeat with `--apply`, merge custom
    instructions, configure project checks/runtime, and validate the result. The
    helper's bootstrap plans by default; `bootstrap --apply` performs its supported
@@ -51,5 +50,4 @@ when missing. Orca is needed to run the workflow, not to begin its installation.
 
 The [setup skill](skills/setup-orca-workflow/SKILL.md) contains the maintained
 installation/adoption procedure, its helpers and platform limits. This entry point
-exists so an agent can begin before the skill or Orca is installed. While this
-repository is private, the user's GitHub access is also required to retrieve it.
+exists so an agent can begin before the skill or Orca is installed.
